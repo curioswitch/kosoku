@@ -73,7 +73,7 @@ impl Case {
 ///     The result of each case, in case order.
 ///
 /// Raises:
-///     TestFailure: If any case did not pass. Its `results` attribute holds the
+///     FailureError: If any case did not pass. Its `results` attribute holds the
 ///         same results that would otherwise be returned.
 #[pyfunction]
 #[pyo3(signature = (url, cases=None, exclude_cases=None, concurrency=1))]

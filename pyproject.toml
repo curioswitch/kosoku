@@ -19,9 +19,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/curioswitch/kosoku-testsuite"
-Issues = "https://github.com/curioswitch/kosoku-testsuite/issues"
-Repository = "https://github.com/curioswitch/kosoku-testsuite.git"
+Homepage = "https://github.com/curioswitch/kosoku"
+Issues = "https://github.com/curioswitch/kosoku/issues"
+Repository = "https://github.com/curioswitch/kosoku.git"
 
 [project.scripts]
 kosoku = "kosoku._cli:main"
@@ -32,6 +32,7 @@ dev = [
   "poethepoet==0.46.0",
   "pytest==9.1.1",
   "pytest-asyncio==1.4.0",
+  "pytest-cov==7.1.0",
   "pyvoy==0.4.0",
   "ruff==0.15.18",
   "websockets==16.0"
@@ -42,8 +43,8 @@ requires = ["maturin>=1.7,<2.0"]
 build-backend = "maturin"
 
 [tool.maturin]
+features = ["pyo3/extension-module"]
 module-name = "kosoku._kosoku"
-python-source = "python"
 
 [tool.pytest.ini_options]
 markers = [
@@ -56,7 +57,7 @@ asyncio_default_test_loop_scope = "module"
 
 [tool.ruff]
 # Don't lint the vendored Autobahn case files.
-extend-exclude = ["python/kosoku/cases"]
+extend-exclude = ["kosoku/cases"]
 
 [tool.ruff.lint.isort]
 required-imports = ["from __future__ import annotations"]

@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Literal, get_args
 from urllib.parse import urlsplit
 
-from kosoku import TestFailure, run_fuzzingclient, run_fuzzingserver
+from kosoku import FailureError, run_fuzzingclient, run_fuzzingserver
 
 from ._report import write_reports
 
@@ -106,7 +106,7 @@ async def amain() -> None:
         Path("reports") / "clients" if is_client else Path("reports") / "servers"
     )
 
-    # The entrypoints return the per-case results, or raise TestFailure
+    # The entrypoints return the per-case results, or raise FailureError
     # (which carries those results) if any case failed. We write the
     # report either way, then map a failure to the exit code.
     failed = False
@@ -137,7 +137,7 @@ async def amain() -> None:
                     file=sys.stderr,
                 )
                 results = await server.get_result()
-    except TestFailure as failure:
+    except FailureError as failure:
         print(failure, file=sys.stderr)
         results = failure.results
         failed = True

@@ -118,11 +118,9 @@ REPO = "crossbario/autobahn-testsuite"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 # We use the target dir for caching artifacts
 TARGET_DIR = REPO_ROOT / "target"
-CASES_DIR = REPO_ROOT / "python" / "kosoku" / "cases"
-TESTDATA_DIR = (
-    REPO_ROOT / "python" / "kosoku" / "shim" / "autobahntestsuite" / "testdata"
-)
-REPORT_ASSETS = REPO_ROOT / "python" / "kosoku" / "_report_assets.py"
+CASES_DIR = REPO_ROOT / "kosoku" / "cases"
+TESTDATA_DIR = REPO_ROOT / "kosoku" / "shim" / "autobahntestsuite" / "testdata"
+REPORT_ASSETS = REPO_ROOT / "kosoku" / "_report_assets.py"
 
 _GENERATORS = [
     ("case6_x_x", "Case6_X_X"),  # 6.5+ UTF-8 sweep

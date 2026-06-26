@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__ = ["FuzzingServer", "TestFailure", "run_fuzzingclient", "run_fuzzingserver"]
+__all__ = ["FuzzingServer", "FailureError", "run_fuzzingclient", "run_fuzzingserver"]
 
-from ._errors import TestFailure
+from ._errors import FailureError
 from ._kosoku import FuzzingServer, run_fuzzingclient, run_fuzzingserver
