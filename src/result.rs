@@ -13,7 +13,7 @@ use crate::asyncrt::attach_blocking;
 use crate::traffic::TrafficStats;
 
 // The Python exception to indicate test failures.
-pyo3::import_exception!(kosoku, TestFailure);
+pyo3::import_exception!(kosoku, FailureError);
 
 /// The shared sink the case drivers push results into as cases finish.
 pub(crate) type Results = Arc<Mutex<Vec<Py<CaseResult>>>>;
@@ -299,7 +299,7 @@ impl CaseResult {
     }
 }
 
-/// Sort the results into case order, then return them — raising `TestFailure`
+/// Sort the results into case order, then return them — raising `FailureError`
 /// if any case failed. Results arrive in completion order, so we order them by
 /// each result's own `case_index` rather than tracking position alongside.
 pub(crate) fn finalize_results(py: Python<'_>, results: &mut Vec<Py<CaseResult>>) -> PyResult<()> {
@@ -332,7 +332,7 @@ pub(crate) fn finalize_results(py: Python<'_>, results: &mut Vec<Py<CaseResult>>
             failures.join("\n")
         );
         let results_py = PyList::new(py, results.iter().map(|cr| cr.clone_ref(py)))?;
-        return Err(TestFailure::new_err((message, results_py.unbind())));
+        return Err(FailureError::new_err((message, results_py.unbind())));
     }
     Ok(())
 }

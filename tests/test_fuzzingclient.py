@@ -21,7 +21,7 @@ from pathlib import Path
 import pytest
 from pyvoy import PyvoyServer
 
-from kosoku import TestFailure, run_fuzzingclient
+from kosoku import FailureError, run_fuzzingclient
 from kosoku.cases import CASES
 
 from ._util import case_params
@@ -38,7 +38,7 @@ async def test_case(server_url: str, case_id: str) -> None:
     await run_fuzzingclient(server_url, [case_id], concurrency=os.cpu_count() or 1)
     try:
         await run_fuzzingclient(server_url, [case_id], concurrency=os.cpu_count() or 1)
-    except TestFailure as exc:
+    except FailureError as exc:
         # 7.1.5 sends fragment1 -> close -> fragment2 and gives the peer 1s
         # o complete the handshake. Whether the echo server's Close
         # echo arrives before that deadline is timing/OS-dependent (it has flaked

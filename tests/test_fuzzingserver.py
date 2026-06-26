@@ -19,9 +19,10 @@ from pathlib import Path
 
 import pytest
 import websockets
+from websockets.extensions.permessage_deflate import ClientPerMessageDeflateFactory
+
 from kosoku import run_fuzzingserver
 from kosoku.cases import CASES
-from websockets.extensions.permessage_deflate import ClientPerMessageDeflateFactory
 
 from ._util import case_params
 
@@ -38,7 +39,6 @@ async def test_case(case_id: str) -> None:
         )
     async with run_fuzzingserver([case_id], host="127.0.0.1", port=0) as server:
         await run_testee(server.port)
-        # get_result raises TestFailure if the case failed server-side.
         await asyncio.wait_for(server.get_result(), timeout=120)
 
 

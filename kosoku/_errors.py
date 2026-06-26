@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from kosoku._kosoku import CaseResult
 
 
-class TestFailure(AssertionError):
+class FailureError(AssertionError):
     """Raised when a run finishes but one or more cases failed.
 
     Attributes:

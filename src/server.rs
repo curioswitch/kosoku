@@ -417,7 +417,7 @@ impl FuzzingServer {
     ///     The result of each case, in case order.
     ///
     /// Raises:
-    ///     TestFailure: If any case did not pass. Its `results` attribute holds
+    ///     FailureError: If any case did not pass. Its `results` attribute holds
     ///         the same results that would otherwise be returned.
     #[pyo3(signature = () -> "list[CaseResult]")]
     async fn get_result(slf: Py<Self>) -> PyResult<Py<PyList>> {

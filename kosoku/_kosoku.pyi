@@ -334,7 +334,7 @@ class FuzzingServer:
             The result of each case, in case order.
 
         Raises:
-            TestFailure: If any case did not pass. Its `results` attribute holds
+            FailureError: If any case did not pass. Its `results` attribute holds
                 the same results that would otherwise be returned.
         """
     @property
@@ -505,7 +505,7 @@ async def run_fuzzingclient(
         The result of each case, in case order.
 
     Raises:
-        TestFailure: If any case did not pass. Its `results` attribute holds the
+        FailureError: If any case did not pass. Its `results` attribute holds the
             same results that would otherwise be returned.
     """
 
