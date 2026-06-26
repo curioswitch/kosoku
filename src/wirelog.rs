@@ -5,6 +5,7 @@
 //! `logTxFrame`) and the `binLogData`/`asciiLogData` encoders in
 //! [`fuzzing.py`](https://github.com/crossbario/autobahn-testsuite/blob/v25.10.1/autobahntestsuite/autobahntestsuite/fuzzing.py#L196).
 
+use faster_hex::hex_string;
 use pyo3::{IntoPyObjectExt, prelude::*};
 
 use crate::constants::Constants;
@@ -13,20 +14,11 @@ use crate::constants::Constants;
 const MAXLEN: usize = 64;
 const ELLIPSES: &str = " ...";
 
-fn to_hex(data: &[u8]) -> String {
-    let mut s = String::with_capacity(data.len() * 2);
-    for b in data {
-        s.push(char::from_digit(u32::from(b >> 4), 16).unwrap());
-        s.push(char::from_digit(u32::from(b & 0xf), 16).unwrap());
-    }
-    s
-}
-
 /// Hex-encode up to `MAXLEN` octets, appending " ..." when truncated. Mirrors
 /// Autobahn's `binLogData`.
 pub fn binlog(data: &[u8]) -> String {
     let take = data.len().min(MAXLEN);
-    let mut s = to_hex(&data[..take]);
+    let mut s = hex_string(&data[..take]);
     if data.len() > MAXLEN - ELLIPSES.len() {
         s.push_str(ELLIPSES);
     }
@@ -50,7 +42,7 @@ pub fn asciilog(data: &[u8]) -> String {
 
 /// Hex of a mask key (`binascii.b2a_hex(mask)` in Autobahn), or `None` if unmasked.
 pub fn mask_hex(mask: Option<[u8; 4]>) -> Option<String> {
-    mask.map(|m| to_hex(&m))
+    mask.map(|m| hex_string(&m))
 }
 
 /// The 3-bit RSV field value Autobahn logs (RSV1=4, RSV2=2, RSV3=1).
