@@ -1,0 +1,46 @@
+[package]
+name = "kosoku"
+version = "0.1.0"
+edition = "2024"
+description = "A native WebSocket protocol compliance fuzzing client that drives the Autobahn TestSuite case files via an extended Python interpreter."
+
+[lib]
+crate-type = ["cdylib"]
+name = "_kosoku"
+
+[dependencies]
+bytes = "1.12.0"
+chrono = "0.4.45"
+flate2 = { version = "1.1.9", default-features = false, features = ["zlib-rs"] }
+http = "1.4.2"
+httparse = "1.10.1"
+itoa = "1.0.18"
+pyo3 = {
+  version = "0.29.0",
+  features = [
+    "bytes",
+    "experimental-async",
+    "experimental-inspect",
+    "extension-module",
+  ]
+}
+rand = "0.10.1"
+regex = "1.12.4"
+tokio = {
+  version = "1.52.3",
+  features = [
+    "io-util",
+    "macros",
+    "net",
+    "rt-multi-thread",
+    "sync",
+    "time",
+  ]
+}
+tungstenite = "0.29.0"
+url = "2.5.8"
+
+[lints.clippy]
+# Docstrings are Python-facing (Google style), not Rust API docs
+doc_markdown = "allow"
+pedantic = { level = "deny", priority = -1 }

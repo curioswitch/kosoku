@@ -1,0 +1,59 @@
+[tasks.build]
+help = "Builds native extensions"
+cmd = "maturin develop --release ${MATURIN_DEVELOP_ARGS}"
+
+[tasks.check]
+help = "Runs all checks"
+sequence = ["lint", "test"]
+
+[tasks.generate]
+help = "Build and regenerate the checked-in _kosoku type stubs"
+sequence = [
+  { cmd = "maturin develop --release --generate-stubs --features pyo3/abi3-py310" },
+  "format-python"
+]
+
+[tasks.format-rust]
+help = "Format Rust code"
+sequence = [
+  { cmd = "cargo clippy --fix --allow-dirty" },
+  { cmd = "cargo fmt" },
+]
+
+[tasks.lint-rust]
+help = "Lint Rust code"
+sequence = [
+  { cmd = "cargo clippy" },
+  { cmd = "cargo fmt --check" },
+]
+
+[tasks.format-python]
+help = "Format Python code"
+sequence = [
+  { cmd = "ruff check --fix --unsafe-fixes --exit-zero ." },
+  { cmd = "ruff format ." },
+]
+
+[tasks.lint-python]
+help = "Lint Python code"
+sequence = [
+  { cmd = "ruff check ." },
+  { cmd = "ruff format --check ." },
+]
+
+[tasks.format]
+help = "Format code"
+sequence = ["format-python", "format-rust"]
+
+[tasks.lint]
+help = "Lint code"
+sequence = ["lint-python", "lint-rust"]
+
+[tasks.test]
+help = "Run the test suite"
+deps = ["build"]
+cmd = "pytest"
+
+[tasks.wheel]
+help = "Builds the wheel"
+cmd = "uv run maturin build --release --strip --out dist ${MATURIN_DEVELOP_ARGS}"

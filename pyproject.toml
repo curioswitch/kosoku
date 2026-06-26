@@ -1,0 +1,63 @@
+[project]
+name = "kosoku"
+version = "0.1.0"
+description = "Native WebSocket protocol-compliance test suite driving the Autobahn TestSuite case files"
+readme = "README.md"
+requires-python = ">= 3.10"
+license-files = ["LICENSE", "NOTICE.txt"]
+authors = [{ name = "CurioSwitch" }]
+keywords = ["autobahn", "compliance", "fuzzing", "testing", "websocket"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Operating System :: MacOS :: MacOS X",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python",
+  "Programming Language :: Rust",
+  "Topic :: Software Development :: Testing",
+]
+
+[project.urls]
+Homepage = "https://github.com/curioswitch/kosoku-testsuite"
+Issues = "https://github.com/curioswitch/kosoku-testsuite/issues"
+Repository = "https://github.com/curioswitch/kosoku-testsuite.git"
+
+[project.scripts]
+kosoku = "kosoku._cli:main"
+
+[dependency-groups]
+dev = [
+  "maturin==1.14.1",
+  "poethepoet==0.46.0",
+  "pytest==9.1.1",
+  "pytest-asyncio==1.4.0",
+  "pyvoy==0.4.0",
+  "ruff==0.15.18",
+  "websockets==16.0"
+]
+
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[tool.maturin]
+module-name = "kosoku._kosoku"
+python-source = "python"
+
+[tool.pytest.ini_options]
+markers = [
+  "slow: heavy cases/suites deselected by default; run with --full",
+]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "module"
+asyncio_default_test_loop_scope = "module"
+
+[tool.ruff]
+# Don't lint the vendored Autobahn case files.
+extend-exclude = ["python/kosoku/cases"]
+
+[tool.ruff.lint.isort]
+required-imports = ["from __future__ import annotations"]
+split-on-trailing-comma = false
