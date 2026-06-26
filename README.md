@@ -4,7 +4,7 @@
 Kosoku is the Japanese word for highway and is inspired by the
 [Autobahn TestSuite](https://github.com/crossbario/autobahn-testsuite).
 
-kosoku drives the Autobahn TestSuite's own case files against a server under test,
+kosoku drives the Autobahn TestSuite's own case files against a server or client under test,
 but replaces Autobahn's test runner with one written in Rust, using PyO3 to drive actual Autobahn
 Python case files. While they cannot be used 100% as-is due to Python2/3 differences
 we need to adjust for, we can auto-translate the few fixes needed for cases that
