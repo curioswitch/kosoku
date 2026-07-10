@@ -61,6 +61,12 @@ jobs:
           rustup update
           ${{ matrix.coverage == 'cov' && 'rustup component add llvm-tools' || '' }}
 
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          key: ${{ matrix.python == '3.14t' && 'freethreaded' || 'abi3' }}${{ matrix.coverage }}
+          cache-on-failure: true
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
       - run: uv sync --locked
 
       # Go ahead and run lint on all Python versions since we may have version-specific
