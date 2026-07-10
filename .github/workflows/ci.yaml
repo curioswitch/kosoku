@@ -46,7 +46,6 @@ jobs:
     env:
       # Avoid multiple compile e.g. in lint and test by setting as a job env var
       RUSTFLAGS: "${{ matrix.coverage == 'cov' && '-C instrument-coverage' || '' }}"
-      MATURIN_DEVELOP_ARGS: ${{ matrix.python != '3.14t' && '--features pyo3/abi3-py310' || '' }}
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
